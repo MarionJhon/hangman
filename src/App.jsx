@@ -1,10 +1,13 @@
 import "./App.css";
 import { useState } from "react";
 import LanguageChips from "./components/LanguageChips";
+import Keyboard from "./components/Keyboard"
 import { languages } from "./language";
 
 function App() {
   const [currentWord, setCurrentWord] = useState("react");
+
+  const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
   const langChips = languages.map((chips) => (
     <LanguageChips
@@ -21,6 +24,12 @@ function App() {
     return <span className="letter" key={index}>{letter}</span>;
   });
 
+  const alphaArr = alphabet.split("");
+  const keyboard = alphaArr.map((letters, index) => {
+    const letter = letters.toUpperCase()
+    return <Keyboard key={index} letter={letter} />
+  }) 
+
   return (
     <main>
       <header>
@@ -36,6 +45,8 @@ function App() {
       </section>
       <section className="language-chips">{langChips}</section>
       <section className="word">{word}</section>
+      <section className="keyboard">{keyboard}</section>
+      <button className="new-game">New Game</button>
     </main>
   );
 }
