@@ -1,7 +1,7 @@
 const Keyboard = (props) => {
   return (
     <>
-      <button className="keyboard-letter">{props.letter}</button>
+      <button className="keyboard-letter" onClick={props.onClick}>{props.letter}</button>
     </>
   );
 };
