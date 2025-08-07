@@ -1,11 +1,19 @@
 import "./App.css";
 import { useState } from "react";
 import LanguageChips from "./components/LanguageChips";
-import Keyboard from "./components/Keyboard"
+import Keyboard from "./components/Keyboard";
 import { languages } from "./language";
 
 function App() {
   const [currentWord, setCurrentWord] = useState("react");
+
+  const [guessedLetter, setGuessedLetter] = useState([]);
+
+  const addGuessedLetter = (value) => {
+    setGuessedLetter((prevLetter) =>
+      prevLetter.includes(value) ? prevLetter : [...prevLetter, value]
+    );
+  };
 
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
@@ -21,14 +29,24 @@ function App() {
   const wordArr = currentWord.split("");
   const word = wordArr.map((letters, index) => {
     const letter = letters.toUpperCase();
-    return <span className="letter" key={index}>{letter}</span>;
+    return (
+      <span className="letter" key={index}>
+        {letter}
+      </span>
+    );
   });
 
   const alphaArr = alphabet.split("");
-  const keyboard = alphaArr.map((letters, index) => {
-    const letter = letters.toUpperCase()
-    return <Keyboard key={index} letter={letter} />
-  }) 
+  const keyboard = alphaArr.map((letters) => {
+    const letter = letters.toUpperCase();
+    return (
+      <Keyboard
+        key={letters}
+        letter={letter}
+        onClick={() => addGuessedLetter(letters)}
+      />
+    );
+  });
 
   return (
     <main>
