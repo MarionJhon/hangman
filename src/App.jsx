@@ -37,13 +37,18 @@ function App() {
   });
 
   const alphaArr = alphabet.split("");
-  const keyboard = alphaArr.map((letters) => {
-    const letter = letters.toUpperCase();
+  const keyboard = alphaArr.map((letter) => {
+    const isGuessed = guessedLetter.includes(letter);
+    const isCorrect = isGuessed && currentWord.includes(letter)
+    const isWrong = isGuessed && !currentWord.includes(letter)
+
     return (
       <Keyboard
-        key={letters}
-        letter={letter}
-        onClick={() => addGuessedLetter(letters)}
+        wrong={isWrong}
+        correct={isCorrect}
+        key={letter}
+        letter={letter.toUpperCase()}
+        onClick={() => addGuessedLetter(letter)}
       />
     );
   });
