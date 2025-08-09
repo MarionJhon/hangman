@@ -9,8 +9,12 @@ body {
   color: #d9d9d9;
   padding: 20px;
   height: 100vh;
+}
+
+main{
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 header {
@@ -25,15 +29,24 @@ header > h1 {
 
 header > p {
   font-size: 0.875rem;
-  max-width: 450px;
+  max-width: 350px;
   color: #8e8e8e;
+}
+
+.game-lost {
+  background-color: #ba2a2a;
+}
+
+.game-win {
+  background-color: #10a95b;
 }
 
 .status {
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: #10a95b;
+  width: 100%;
+  max-width: 350px;
   border-radius: 4px;
   color: #f9f4da;
   margin-block: 30px;
@@ -54,13 +67,29 @@ header > p {
   flex-wrap: wrap;
   gap: 5px;
   justify-content: center;
-  max-width: 450px;
+  max-width: 350px;
   margin-bottom: 36px;
 }
 
-.chips {
+span.chip {
   border-radius: 3px;
   padding: 4.5px;
+  position: relative;
+}
+
+span.chip.lost::before {
+  content: "💀";
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  font-size: 0.85rem;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 2.5px;
 }
 
 .word {
@@ -91,31 +120,31 @@ header > p {
   margin-bottom: 36px;
 }
 
-.keyboard-letter{
-    background-color: #FCBA29;
-    height: 35px;
-    width: 35px;
-    border: 1px solid #D7D7D7;
-    border-radius: 4px;
-    cursor: pointer;
+.keyboard-letter {
+  background-color: #fcba29;
+  height: 35px;
+  width: 35px;
+  border: 1px solid #d7d7d7;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 button.new-game {
-    background-color: #11B5E5;
-    border: 1px solid #D7D7D7;
-    border-radius: 4px;
-    width: 225px;
-    height: 40px;
-    padding: 6px 12px;
-    display: block;
-    margin-inline: auto;
-    cursor: pointer;
+  background-color: #11b5e5;
+  border: 1px solid #d7d7d7;
+  border-radius: 4px;
+  width: 225px;
+  height: 40px;
+  padding: 6px 12px;
+  display: block;
+  margin-inline: auto;
+  cursor: pointer;
 }
 
-.isWrong{
-  background-color: #EC5D49;
+.isWrong {
+  background-color: #ec5d49;
 }
 
-.isCorrect{
-  background-color: #10A95B;
+.isCorrect {
+  background-color: #10a95b;
 }
