@@ -28,10 +28,9 @@ function App() {
 
   const wordArr = currentWord.split("");
   const word = wordArr.map((letters, index) => {
-    const letter = letters.toUpperCase();
     return (
       <span className="letter" key={index}>
-        {letter}
+        {guessedLetter.includes(letters) ? letters.toUpperCase() : ""}
       </span>
     );
   });
