@@ -3,11 +3,26 @@ import { useState } from "react";
 import LanguageChips from "./components/LanguageChips";
 import Keyboard from "./components/Keyboard";
 import { languages } from "./language";
+import clsx from "clsx";
 
 function App() {
+  //state values
   const [currentWord, setCurrentWord] = useState("react");
-
   const [guessedLetter, setGuessedLetter] = useState([]);
+
+  //derived values
+  const wrongGuessCount = guessedLetter.filter(
+    (letter) => !currentWord.includes(letter)
+  ).length;
+
+  const isGameWin = currentWord
+    .split("")
+    .every((letter) => guessedLetter.includes(letter));
+  const isGameLost = wrongGuessCount >= languages.length - 1;
+  const isGameOver = isGameWin || isGameLost;
+
+  //static values
+  const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
   const addGuessedLetter = (value) => {
     setGuessedLetter((prevLetter) =>
@@ -15,16 +30,18 @@ function App() {
     );
   };
 
-  const alphabet = "abcdefghijklmnopqrstuvwxyz";
-
-  const langChips = languages.map((chips) => (
-    <LanguageChips
-      key={chips.name}
-      name={chips.name}
-      bg={chips.backgroundColor}
-      color={chips.color}
-    />
-  ));
+  const langChips = languages.map((chips, index) => {
+    const islost = index < wrongGuessCount;
+    return (
+      <LanguageChips
+        key={chips.name}
+        name={chips.name}
+        bg={chips.backgroundColor}
+        color={chips.color}
+        lost={islost}
+      />
+    );
+  });
 
   const wordArr = currentWord.split("");
   const word = wordArr.map((letters, index) => {
@@ -38,8 +55,8 @@ function App() {
   const alphaArr = alphabet.split("");
   const keyboard = alphaArr.map((letter) => {
     const isGuessed = guessedLetter.includes(letter);
-    const isCorrect = isGuessed && currentWord.includes(letter)
-    const isWrong = isGuessed && !currentWord.includes(letter)
+    const isCorrect = isGuessed && currentWord.includes(letter);
+    const isWrong = isGuessed && !currentWord.includes(letter);
 
     return (
       <Keyboard
@@ -52,6 +69,28 @@ function App() {
     );
   });
 
+  const renderGameStatus = () => {
+    if (!isGameOver) {
+      return null;
+    }
+
+    if (isGameWin) {
+      return (
+        <>
+          <h1>You win!</h1>
+          <p>Well done🎉</p>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <h1>Game over!</h1>
+          <p>You lost! Better start learning assembly🥹 </p>
+        </>
+      );
+    }
+  };
+
   return (
     <main>
       <header>
@@ -61,14 +100,19 @@ function App() {
           from assembly!
         </p>
       </header>
-      <section className="status">
-        <h1>You win!</h1>
-        <p>Well done🎉</p>
+      <section
+        className={clsx(
+          "status",
+          isGameWin && "game-win",
+          isGameLost && "game-lost"
+        )}
+      >
+        {renderGameStatus()}
       </section>
       <section className="language-chips">{langChips}</section>
       <section className="word">{word}</section>
       <section className="keyboard">{keyboard}</section>
-      <button className="new-game">New Game</button>
+      {isGameOver && <button className="new-game">New Game</button>}
     </main>
   );
 }
