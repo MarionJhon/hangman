@@ -70,6 +70,7 @@ function App() {
         correct={isCorrect}
         key={letter}
         letter={letter.toUpperCase()}
+        disabled={isGameOver}
         onClick={() => addGuessedLetter(letter)}
       />
     );

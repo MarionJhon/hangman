@@ -10,6 +10,7 @@ const Keyboard = (props) => {
       <button
         className={styleKeyboard}
         onClick={props.onClick}
+        disabled={props.disabled}
       >
         {props.letter}
       </button>
