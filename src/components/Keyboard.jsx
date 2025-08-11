@@ -11,6 +11,8 @@ const Keyboard = (props) => {
         className={styleKeyboard}
         onClick={props.onClick}
         disabled={props.disabled}
+        aria-disabled={props.ariaDisable}
+        aria-label={`Letter ${props.label}`}
       >
         {props.letter}
       </button>
