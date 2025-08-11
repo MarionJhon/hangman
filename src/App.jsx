@@ -68,6 +68,8 @@ function App() {
       <Keyboard
         wrong={isWrong}
         correct={isCorrect}
+        ariaDisable={guessedLetter.includes(letter)}
+        label={letter}
         key={letter}
         letter={letter.toUpperCase()}
         disabled={isGameOver}
@@ -114,17 +116,22 @@ function App() {
         </p>
       </header>
       <section
+        aria-live="polite"
+        role="status"
         className={clsx(
           "status",
           isGameWin && "game-win",
           isGameLost && "game-lost",
-          {farewell: !isGameOver && isLastGuessIncorrect}
+          { farewell: !isGameOver && isLastGuessIncorrect }
         )}
       >
         {renderGameStatus()}
       </section>
       <section className="language-chips">{langChips}</section>
       <section className="word">{word}</section>
+      <section className="sr-only" aria-live="polite" role="status">
+        <p>Current word: {currentWord.split("").map(letter => guessedLetter.includes(letter) ? letter + "." : "blank.").join(" ")}</p>
+      </section>
       <section className="keyboard">{keyboard}</section>
       {isGameOver && <button className="new-game">New Game</button>}
     </main>
