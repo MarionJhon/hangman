@@ -24,6 +24,7 @@ function App() {
   //static values
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
+  //add the letter to state array
   const addGuessedLetter = (value) => {
     setGuessedLetter((prevLetter) =>
       prevLetter.includes(value) ? prevLetter : [...prevLetter, value]
@@ -43,11 +44,12 @@ function App() {
     );
   });
 
+  //Display each letter in uppercase if it matches a guessed letter
   const wordArr = currentWord.split("");
-  const word = wordArr.map((letters, index) => {
+  const word = wordArr.map((letter, index) => {
     return (
       <span className="letter" key={index}>
-        {guessedLetter.includes(letters) ? letters.toUpperCase() : ""}
+        {guessedLetter.includes(letter) ? letter.toUpperCase() : ""}
       </span>
     );
   });
