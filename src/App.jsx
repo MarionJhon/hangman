@@ -3,6 +3,7 @@ import { useState } from "react";
 import LanguageChips from "./components/LanguageChips";
 import Keyboard from "./components/Keyboard";
 import { languages } from "./language";
+import { getFarewellText } from "./util";
 import clsx from "clsx";
 
 function App() {
@@ -20,6 +21,9 @@ function App() {
     .every((letter) => guessedLetter.includes(letter));
   const isGameLost = wrongGuessCount >= languages.length - 1;
   const isGameOver = isGameWin || isGameLost;
+  const lastGuessedLetter = guessedLetter[guessedLetter.length - 1];
+  const isLastGuessIncorrect =
+    lastGuessedLetter && !currentWord.includes(lastGuessedLetter);
 
   //static values
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -72,8 +76,12 @@ function App() {
   });
 
   const renderGameStatus = () => {
-    if (!isGameOver) {
-      return null;
+    if (!isGameOver && isLastGuessIncorrect) {
+      return (
+        <p className="farewell-message">
+          {getFarewellText(languages[wrongGuessCount - 1].name)}
+        </p>
+      );
     }
 
     if (isGameWin) {
@@ -83,7 +91,8 @@ function App() {
           <p>Well done🎉</p>
         </>
       );
-    } else {
+    }
+    if (isGameLost) {
       return (
         <>
           <h1>Game over!</h1>
@@ -91,6 +100,7 @@ function App() {
         </>
       );
     }
+    return null;
   };
 
   return (
@@ -106,7 +116,8 @@ function App() {
         className={clsx(
           "status",
           isGameWin && "game-win",
-          isGameLost && "game-lost"
+          isGameLost && "game-lost",
+          {farewell: !isGameOver && isLastGuessIncorrect}
         )}
       >
         {renderGameStatus()}
