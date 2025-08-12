@@ -15,7 +15,7 @@ function App() {
   const wrongGuessCount = guessedLetter.filter(
     (letter) => !currentWord.includes(letter)
   ).length;
-
+  const numGuessLeft = languages.length - 1 - wrongGuessCount;
   const isGameWin = currentWord
     .split("")
     .every((letter) => guessedLetter.includes(letter));
@@ -130,7 +130,21 @@ function App() {
       <section className="language-chips">{langChips}</section>
       <section className="word">{word}</section>
       <section className="sr-only" aria-live="polite" role="status">
-        <p>Current word: {currentWord.split("").map(letter => guessedLetter.includes(letter) ? letter + "." : "blank.").join(" ")}</p>
+        <p>
+          {currentWord.includes(lastGuessedLetter)
+            ? `Correct! the letter ${lastGuessedLetter} is in the word.`
+            : `Sorry, the letter ${lastGuessedLetter} is not in the word.`}
+          You have {numGuessLeft} attempts left.
+        </p>
+        <p>
+          Current word:{" "}
+          {currentWord
+            .split("")
+            .map((letter) =>
+              guessedLetter.includes(letter) ? letter + "." : "blank."
+            )
+            .join(" ")}
+        </p>
       </section>
       <section className="keyboard">{keyboard}</section>
       {isGameOver && <button className="new-game">New Game</button>}
