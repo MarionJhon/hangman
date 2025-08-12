@@ -123,6 +123,11 @@ span.chip.lost::before {
   font-size: 1.125rem;
 }
 
+.revelLetter {
+  color: #ec5d49;
+  border-bottom: 1px solid #ec5d49;
+}
+
 .keyboard {
   display: flex;
   flex-wrap: wrap;
