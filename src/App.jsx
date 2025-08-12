@@ -3,12 +3,12 @@ import { useState } from "react";
 import LanguageChips from "./components/LanguageChips";
 import Keyboard from "./components/Keyboard";
 import { languages } from "./language";
-import { getFarewellText } from "./util";
+import { getFarewellText, getRandomWord } from "./util";
 import clsx from "clsx";
 
 function App() {
   //state values
-  const [currentWord, setCurrentWord] = useState("react");
+  const [currentWord, setCurrentWord] = useState(() => getRandomWord());
   const [guessedLetter, setGuessedLetter] = useState([]);
 
   //derived values
@@ -105,6 +105,11 @@ function App() {
     }
     return null;
   };
+  
+  const startNewGame = () => {
+    setCurrentWord(getRandomWord())
+    setGuessedLetter([])
+  }
 
   return (
     <main>
@@ -147,7 +152,7 @@ function App() {
         </p>
       </section>
       <section className="keyboard">{keyboard}</section>
-      {isGameOver && <button className="new-game">New Game</button>}
+      {isGameOver && <button className="new-game" onClick={startNewGame}>New Game</button>}
     </main>
   );
 }
