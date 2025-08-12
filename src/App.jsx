@@ -51,9 +51,17 @@ function App() {
   //Display each letter in uppercase if it matches a guessed letter
   const wordArr = currentWord.split("");
   const word = wordArr.map((letter, index) => {
+    const shouldRevelLetter = isGameLost || guessedLetter.includes(letter);
+
     return (
-      <span className="letter" key={index}>
-        {guessedLetter.includes(letter) ? letter.toUpperCase() : ""}
+      <span
+        className={clsx(
+          "letter",
+          isGameLost && guessedLetter.includes(letter) && "revelLetter"
+        )}
+        key={index}
+      >
+        {shouldRevelLetter ? letter.toUpperCase() : ""}
       </span>
     );
   });
@@ -105,11 +113,11 @@ function App() {
     }
     return null;
   };
-  
+
   const startNewGame = () => {
-    setCurrentWord(getRandomWord())
-    setGuessedLetter([])
-  }
+    setCurrentWord(getRandomWord());
+    setGuessedLetter([]);
+  };
 
   return (
     <main>
@@ -152,7 +160,11 @@ function App() {
         </p>
       </section>
       <section className="keyboard">{keyboard}</section>
-      {isGameOver && <button className="new-game" onClick={startNewGame}>New Game</button>}
+      {isGameOver && (
+        <button className="new-game" onClick={startNewGame}>
+          New Game
+        </button>
+      )}
     </main>
   );
 }
