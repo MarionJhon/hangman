@@ -4,6 +4,7 @@ import LanguageChips from "./components/LanguageChips";
 import Keyboard from "./components/Keyboard";
 import { languages } from "./language";
 import { getFarewellText, getRandomWord } from "./util";
+import Confetti from "react-confetti";
 import clsx from "clsx";
 
 function App() {
@@ -57,7 +58,7 @@ function App() {
       <span
         className={clsx(
           "letter",
-          isGameLost && guessedLetter.includes(letter) && "revelLetter"
+          isGameLost && !guessedLetter.includes(letter) && "revelLetter"
         )}
         key={index}
       >
@@ -121,6 +122,7 @@ function App() {
 
   return (
     <main>
+      {isGameWin && <Confetti recycle={false} numberOfPieces={1000} />}
       <header>
         <h1>Assembly: Endgame</h1>
         <p>
